@@ -9,7 +9,7 @@
         }
 
         public int Id { get; set; }
-        // TODO Add Brand with relation
+        public required Brand Brand { get; set; }
         public required string Model { get; set; }
         public decimal Price { get; set; }
         public DateTime? RegistrationDate { get; set; }

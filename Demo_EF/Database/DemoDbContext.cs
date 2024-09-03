@@ -8,6 +8,7 @@ namespace Demo_EF.Database
     {
         #region Entités de la DB
         public DbSet<Car> Car { get; set; }
+        public DbSet<Brand> Brand { get; set; }
         #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -22,6 +23,7 @@ namespace Demo_EF.Database
         {
             // Définition de la configuration via la Fluent-API
             modelBuilder.ApplyConfiguration(new CarConfig());
+            modelBuilder.ApplyConfiguration(new BrandConfig());
         }
     }
 }
