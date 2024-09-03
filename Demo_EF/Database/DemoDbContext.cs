@@ -1,4 +1,4 @@
-using Demo_EF.Database.Configurations;
+﻿using Demo_EF.Database.Configurations;
 using Demo_EF.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +16,12 @@ namespace Demo_EF.Database
             //  -> Setup pour un utilisation simple via l'opérateur "new"
             //  https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/
             optionsBuilder.UseSqlServer("Server=localhost;Database=Demo_EFCore;Trusted_Connection=True;Trust Server Certificate=True");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Définition de la configuration via la Fluent-API
+            modelBuilder.ApplyConfiguration(new CarConfig());
         }
     }
 }
