@@ -35,6 +35,25 @@ namespace Demo_EF.Database.Configurations
 
             builder.ToTable(t => t.HasCheckConstraint("CK_Car__Price", "[Price] >= 0"));
 
+            // Initial Data
+            builder.HasData(
+                new Car
+                {
+                    Id = 1,
+                    Model = "Samara",
+                    Price = 199.99m,
+                    RegistrationDate = new DateTime(1987, 11, 2),
+                    State = Car.StateEnum.OCCASION
+                },
+                new Car
+                {
+                    Id = 2,
+                    Model = "R8 Spyder",
+                    Price = 1_930.5m,
+                    RegistrationDate = null,
+                    State = Car.StateEnum.FOR_PARTS
+                }
+            );
         }
     }
 }
