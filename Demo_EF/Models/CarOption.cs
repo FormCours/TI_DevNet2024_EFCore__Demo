@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Demo_EF.Models
 {
-    public class Brand
+    public class CarOption
     {
         public int Id { get; set; }
         public required string Name { get; set; }
-        public string? Country { get; set; }
+        public string? Description { get; set; }
 
         public IEnumerable<Car> Cars { get; set; } = [];
     }

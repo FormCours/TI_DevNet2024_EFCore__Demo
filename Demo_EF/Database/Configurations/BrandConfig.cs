@@ -29,17 +29,6 @@ namespace Demo_EF.Database.Configurations
 
             builder.HasIndex(b => new { b.Name, b.Country })
                    .IsUnique();
-
-            // Relations
-            builder.HasMany(brand => brand.Cars)
-                   .WithOne(car => car.Brand)
-                   .OnDelete(DeleteBehavior.NoAction);
-
-            // Initial Data
-            builder.HasData(
-               new Brand { Id = 1, Name = "Lada" },
-               new Brand { Id = 2, Name = "Audi" }
-            );
         }
     }
 }

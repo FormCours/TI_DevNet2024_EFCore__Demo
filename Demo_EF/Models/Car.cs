@@ -14,5 +14,7 @@
         public decimal Price { get; set; }
         public DateTime? RegistrationDate { get; set; }
         public StateEnum State { get; set; }
+
+        public IEnumerable<CarOption> Options { get; set; } = [];
     }
 }

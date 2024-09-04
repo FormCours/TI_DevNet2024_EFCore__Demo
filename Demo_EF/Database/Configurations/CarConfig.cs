@@ -1,6 +1,8 @@
-﻿using Demo_EF.Models;
+﻿using Azure;
+using Demo_EF.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace Demo_EF.Database.Configurations
 {
@@ -36,29 +38,19 @@ namespace Demo_EF.Database.Configurations
             builder.ToTable(t => t.HasCheckConstraint("CK_Car__Price", "[Price] >= 0"));
 
             // Relations
-            builder.HasOne(car => car.Brand)
-                   .WithMany(brand => brand.Cars);
+            builder.HasOne(c => c.Brand)
+                   .WithMany(brand => brand.Cars)
+                   .OnDelete(DeleteBehavior.NoAction)
+                   .IsRequired();
 
-            // Initial Data
-            builder.HasData(
-                new 
-                {
-                    Id = 1,
-                    Model = "Samara",
-                    BrandId = 1,
-                    Price = 199.99m,
-                    RegistrationDate = new DateTime(1987, 11, 2),
-                    State = Car.StateEnum.OCCASION
-                },
-                new 
-                {
-                    Id = 2,
-                    Model = "R8 Spyder",
-                    BrandId = 2,
-                    Price = 1_930.5m,
-                    State = Car.StateEnum.FOR_PARTS
-                }
-            );
+            builder.HasMany(c => c.Options)
+                   .WithMany(co => co.Cars)
+                   .UsingEntity(
+                        "Car__Car_Option",
+                        l => l.HasOne(typeof(CarOption)).WithMany().HasForeignKey("OptionId").HasPrincipalKey(nameof(CarOption.Id)),
+                        r => r.HasOne(typeof(Car)).WithMany().HasForeignKey("CarId").HasPrincipalKey(nameof(Car.Id)),
+                        j => j.HasKey("CarId", "OptionId")
+                   );
         }
     }
 }
